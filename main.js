@@ -707,9 +707,10 @@ Velocity = {};
         DEBUG && console.log('[velocity] rsync took', Date.now() - then);
       }
       // TODO remove this once jasmine and mocha-web are using the new method
+      var portMatch = process.env.ROOT_URL.match(/\:(\d+)\/?$/);
       Meteor.call('velocityStartMirror', {
         name: 'mocha-web',
-        port: 5000
+        port: (portMatch && (+portMatch[1] + 2000)) || 5000
       }, function (e, r) {
         if (e) {
           console.error('[velocity] mirror failed to start', e);
